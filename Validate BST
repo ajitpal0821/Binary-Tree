@@ -1,27 +1,17 @@
-class Solution{
-  public:
-    /*You are required to complete this method*/
-    
-    bool solve(Node*root,int level,int *leafnode){
+class Solution
+{
+    public:
+    //Function to check whether a Binary Tree is BST or not.
+    bool valid(Node*root,int min,int max){
         if(root==NULL)
         return true;
-        
-        if(root->left==NULL and root->right==NULL){
-            if(*leafnode==0){
-                *leafnode=level;
-                return true;
-            }
-            else
-                return (level==*leafnode);
-        }
-        return solve(root->left,level+1,leafnode) and solve(root->right,level+1,leafnode);
+        if(root->data<=min or root->data>=max) return false;
+    return    valid(root->left,min,root->data) && valid(root->right,root->data,max);
         
     }
-    bool check(Node *root)
+    bool isBST(Node* root) 
     {
-        //Your code here
-        int level=0;
-        int leafnode=0;
-        solve(root,level,&leafnode);
+        // Your code herev
+        return valid(root,INT_MIN,INT_MAX);
     }
 };
