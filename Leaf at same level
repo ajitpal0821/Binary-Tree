@@ -1,0 +1,27 @@
+class Solution{
+  public:
+    /*You are required to complete this method*/
+    
+    bool solve(Node*root,int level,int *leafnode){
+        if(root==NULL)
+        return true;
+        
+        if(root->left==NULL and root->right==NULL){
+            if(*leafnode==0){
+                *leafnode=level;             // move to leaf node  and update leafnode with level
+                return true;
+            }
+            else
+                return (level==*leafnode);     //checking for every node 
+        }
+        return solve(root->left,level+1,leafnode) and solve(root->right,level+1,leafnode);
+        
+    }
+    bool check(Node *root)
+    {
+        //Your code here
+        int level=0;
+        int leafnode=0;
+        solve(root,level,&leafnode);    //passing by address
+    }
+};
