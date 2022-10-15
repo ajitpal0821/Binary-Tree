@@ -1,0 +1,32 @@
+class Solution{
+public:    
+
+int nonode(Node*root){
+    if(root==NULL)
+    return 0;
+    
+    if(root!=NULL)
+    return(1+nonode(root->left)+nonode(root->right));
+}
+int height(Node*root){
+    if(root==NULL)
+    return 0;
+    
+    int left=height(root->left);
+    int right=height(root->right);
+    
+    int ans=max(left,right)+1;
+    
+    return ans;
+}
+    bool isCompleteBT(Node* root){
+        //code here
+       int h= height(root);
+       int count=nonode(root);
+       int result=2^h-1;
+       if(==count)
+       return true;
+       else
+       return false;
+    }
+};
