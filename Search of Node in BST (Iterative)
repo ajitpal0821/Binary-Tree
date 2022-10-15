@@ -4,14 +4,14 @@
 
 
 bool searchInBST(BinaryTreeNode<int> *root, int x) {
-BinaryTreeNode<int>*temp=root;
+   BinaryTreeNode<int>*temp=root;
 while(temp!=NULL){
     if(temp->data==x)
        return true;
-    else if(temp->data>x
-       return searchInBST(root->left,x)
+    else if(temp->data>x)
+       temp=temp->left;
     else
-       return searchInBST(root->right,x);
+       temp=temp->right;
 }
 return false;
 }
