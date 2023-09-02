@@ -1,0 +1,90 @@
+#include<bits/stdc++.h>
+/*
+    Following is Binary Tree Node structure:
+    class TreeNode
+    {
+    public:
+        int data;
+        TreeNode *left, *right;
+        TreeNode() : data(0), left(NULL), right(NULL) {}
+        TreeNode(int x) : data(x), left(NULL), right(NULL) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : data(x), left(left), right(right) {}
+    };
+*/
+void funpost(TreeNode*root,vector<int>&post){
+    stack<TreeNode*>s1;
+    stack<TreeNode*>s2;
+
+    s1.push(root);
+    while(!s1.empty()){
+        auto it=s1.top();
+        s1.pop();
+        s2.push(it);
+        if(it->left)
+        s1.push(it->left);
+        if(it->right)
+        s1.push(it->right);
+
+
+    }
+    while(!s2.empty()){
+        auto res=s2.top();
+        post.push_back(res->data);
+        s2.pop();
+    }
+}
+void funpre(TreeNode*root,vector<int>&pre)
+{
+    stack<TreeNode*>s;
+    s.push(root);
+    if(root==NULL)
+    return;
+    while(!s.empty()){
+        auto nodes=s.top();
+        s.pop();
+        
+        pre.push_back(nodes->data);
+        if(nodes->right)
+        s.push(nodes->right);
+        if(nodes->left)
+        s.push(nodes->left);
+        
+    }
+}
+void funinor(TreeNode*root,vector<int>&inor){
+   
+    stack<TreeNode*>s;
+    // s.push(root);
+    TreeNode*curr=root;
+    while(!s.empty() || curr!=NULL)
+    {
+       
+        if (curr != NULL) {
+        s.push(curr);
+        curr=curr->left;
+        } else {
+        curr = s.top();
+        s.pop();
+        inor.push_back(curr->data);
+        curr=curr->right;
+        }
+    }
+}
+vector<vector<int>> getTreeTraversal(TreeNode *root){
+    // Write your code here.
+    vector<int>pre;
+    vector<int>inor;
+    vector<int>post;
+    vector<vector<int>>ans;
+
+    funpre(root,pre);
+    funinor(root,inor);
+    funpost(root,post);
+    
+
+    ans.push_back(inor);
+    ans.push_back(pre);
+    ans.push_back(post);
+    
+    return  ans;
+}
