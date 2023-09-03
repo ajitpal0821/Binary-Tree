@@ -1,0 +1,61 @@
+void make_parent( unordered_map<BinaryTreeNode<int>*,BinaryTreeNode<int>*>&mp,BinaryTreeNode<int>* root,BinaryTreeNode<int>* target){
+    if(root==NULL)
+    return;
+    queue<BinaryTreeNode<int>*>q;
+    q.push(root);
+    while(!q.empty()){
+        auto it=q.front();
+        q.pop();
+        if(it->left){
+            mp[it->left]=it;
+            q.push(it->left);
+        }
+        if(it->right){
+        mp[it->right]=it;
+        q.push(it->right);
+
+        }
+    }
+}
+vector<BinaryTreeNode<int>*> printNodesAtDistanceK(BinaryTreeNode<int>* root, BinaryTreeNode<int>* target, int K) {
+    // Write your code here.
+    unordered_map<BinaryTreeNode<int>*,BinaryTreeNode<int>*>mp;
+    make_parent(mp,root,target);
+
+    queue<BinaryTreeNode<int>*>q;
+    q.push(target);
+    unordered_map<BinaryTreeNode<int>*,bool>vis;
+    vis[target]=true;
+    int dis=0;
+    while(!q.empty()){
+        int size=q.size();
+        if(K==dis)
+        break;
+        else
+        dis++;
+        for(int i=0;i<size;i++){
+            auto it=q.front();
+            q.pop();
+            if(it->left && !vis[it->left]){
+                vis[it->left]=true;
+                q.push(it->left);
+            }
+            if(it->right && !vis[it->right]){
+                vis[it->right]=true;
+                q.push(it->right);
+            }
+            if(mp.find(it) != mp.end() && !vis[mp[it]]){
+                vis[mp[it]]=true;
+                q.push(mp[it]);
+            }
+        }
+
+    }
+    vector<BinaryTreeNode<int>*>ans;
+    while(!q.empty()){
+        ans.push_back(q.front());
+        q.pop();
+    }
+    return ans;
+
+}
