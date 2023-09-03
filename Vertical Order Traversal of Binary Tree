@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+/************************************************************
+
+    Following is the TreeNode class structure:
+
+    template <typename T>
+    class TreeNode
+    {
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T dat)
+        {
+            this->data = dat;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+
+vector<int> verticalOrderTraversal(TreeNode<int> *root)
+{
+	// Write your code here.
+
+    map<int,map<int,multiset<int>>>mp;//hor,vertical,node mullitset for sorting
+    queue<pair<TreeNode<int>*,pair<int,int>>>pq;
+    vector<int>ans;
+    // if(root==NULL)
+    // return ans;
+
+    pq.push({root, {0, 0}});
+    while(!pq.empty()){
+        TreeNode<int>*node=pq.front().first;
+        int dis=pq.front().second.first;
+        int lv=pq.front().second.second;
+        pq.pop();
+
+        mp[dis][lv].insert(node->data);
+
+        if(node->left)
+          pq.push({node->left, {dis - 1, lv + 1}});
+        if(node->right)
+          pq.push({node->right, {dis + 1, lv + 1}});
+    }
+    for(auto it:mp){
+        for (auto x : it.second) {
+          for (auto a : x.second)
+            ans.push_back(a);
+        }
+    }
+    return ans;
+    
+
+
+
+}
