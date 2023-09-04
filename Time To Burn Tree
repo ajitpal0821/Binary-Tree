@@ -1,0 +1,67 @@
+void make_parent(unordered_map<BinaryTreeNode<int>*,BinaryTreeNode<int>*>&mp,BinaryTreeNode<int>*root,int start){
+    if(root==NULL)
+    return;
+    queue<BinaryTreeNode<int>*>q;
+    q.push(root);
+    while(!q.empty()){
+        auto it=q.front();
+        q.pop();
+        if(it->left){
+            mp[it->left]=it;
+            q.push(it->left);
+        }
+        if(it->right){
+            mp[it->right]=it;
+            q.push(it->right);
+        }
+    }
+}
+void address(BinaryTreeNode<int>*root,int start,BinaryTreeNode<int>*&res){
+    if(root==NULL)
+    return;
+    if(root->data==start){
+    res=root;
+    return;
+    }
+    address(root->left,start,res);
+    address(root->right,start,res);
+}
+int timeToBurnTree(BinaryTreeNode<int>* root, int start)
+{
+    // Write your code here
+    BinaryTreeNode<int>*res;
+    address(root,start,res);
+    unordered_map<BinaryTreeNode<int>*,BinaryTreeNode<int>*>mp;
+    make_parent(mp,root,start);
+    queue<BinaryTreeNode<int>*>q;
+    q.push(res);
+    int dis=0;
+   unordered_map<BinaryTreeNode<int>*, bool> vis;
+
+    vis[res]=true;
+    while(!q.empty()){
+        int size=q.size();
+        dis++;
+        for(int i=0;i<size;i++){
+            auto it=q.front();
+            q.pop();
+            if(it->left  && !vis[it->left] ){
+                vis[it->left]=true;
+                q.push(it->left);
+            }
+             if(it->right && !vis[it->right]){
+                vis[it->right]=true;
+                q.push(it->right);
+            }
+            if(mp.find(it)!=mp.end() && !vis[mp[it]]){
+                    vis[mp[it]]=true;
+                    q.push(mp[it]);
+            }
+
+        }
+        
+    }
+   
+        return dis-1;//subtract root time
+     
+}
