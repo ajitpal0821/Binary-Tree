@@ -1,0 +1,41 @@
+void fun(vector<string>&ans,BinaryTreeNode<int>*root,string res){
+    if(root==NULL)
+    return;
+    if(root->left==NULL && root->right==NULL)
+    {
+        res+=to_string(root->data);
+        ans.push_back(res);
+        return;
+    }
+    res+=to_string(root->data)+" ";
+    fun(ans,root->left,res);
+    fun(ans,root->right,res);
+}
+vector <string> allRootToLeaf(BinaryTreeNode<int> * root) {
+    // Write your code here.
+    vector<string>ans;
+    if(root==NULL)
+    return ans;
+    fun(ans,root,"");
+    return ans;
+}void fun(vector<string>&ans,BinaryTreeNode<int>*root,string res){
+    if(root==NULL)
+    return;
+    if(root->left==NULL && root->right==NULL)
+    {
+        res+=to_string(root->data);
+        ans.push_back(res);
+        return;
+    }
+    res+=to_string(root->data)+" ";
+    fun(ans,root->left,res);
+    fun(ans,root->right,res);
+}
+vector <string> allRootToLeaf(BinaryTreeNode<int> * root) {
+    // Write your code here.
+    vector<string>ans;
+    if(root==NULL)
+    return ans;
+    fun(ans,root,"");
+    return ans;
+}
